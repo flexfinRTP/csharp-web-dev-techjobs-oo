@@ -9,7 +9,7 @@ namespace TechJobsOO
         private static int nextId = 1;
 
         public string Name { get; set; }
-        public Location JobLocation { get; set; }
+        public Location EmployerLocation { get; set; }
         public Employer EmployerName { get; set; }
         public PositionType JobType { get; set; }
         public CoreCompetency JobCoreCompetency { get; set; }
@@ -25,7 +25,7 @@ namespace TechJobsOO
         {
             Name = name;
             EmployerName = employerName;
-            JobLocation = jobLocation;
+            EmployerLocation = jobLocation;
             JobType = jobType;
             JobCoreCompetency = jobCoreCompetency;
 
@@ -39,14 +39,14 @@ namespace TechJobsOO
                    Id == job.Id &&
                    Name == job.Name &&
                    EqualityComparer<Employer>.Default.Equals(EmployerName, job.EmployerName) &&
-                   EqualityComparer<Location>.Default.Equals(JobLocation, job.JobLocation) &&
+                   EqualityComparer<Location>.Default.Equals(EmployerLocation, job.EmployerLocation) &&
                    EqualityComparer<PositionType>.Default.Equals(JobType, job.JobType) &&
                    EqualityComparer<CoreCompetency>.Default.Equals(JobCoreCompetency, job.JobCoreCompetency);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Name, EmployerName, JobLocation, JobType, JobCoreCompetency);
+            return HashCode.Combine(Id, Name, EmployerName, EmployerLocation, JobType, JobCoreCompetency);
         }
 
         public override string ToString()
@@ -62,9 +62,9 @@ namespace TechJobsOO
                 EmployerName.Value = "Data not available";
             }
 
-            if (JobLocation.Value == "" || JobLocation.Value == null)
+            if (EmployerLocation.Value == "" || EmployerLocation.Value == null)
             {
-                JobLocation.Value = "Data not available";
+                EmployerLocation.Value = "Data not available";
             }
 
             if (JobType.Value == "" || JobType.Value == null)
@@ -77,7 +77,7 @@ namespace TechJobsOO
                 JobCoreCompetency.Value = "Data not available";
             }
 
-            string output = $"ID: {Id} \n Name: {Name} \n Employer: {EmployerName.Value} \n Location: {JobLocation.Value} \n Position Type: {JobType.Value} \n Core Compentency: {JobCoreCompetency.Value} \n";
+            string output = $"ID: {Id} \n Name: {Name} \n Employer: {EmployerName.Value} \n Location: {EmployerLocation.Value} \n Position Type: {JobType.Value} \n Core Compentency: {JobCoreCompetency.Value} \n";
 
             return output;
         }
