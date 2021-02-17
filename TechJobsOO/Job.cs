@@ -30,7 +30,6 @@ namespace TechJobsOO
             JobCoreCompetency = jobCoreCompetency;
 
         }
-
         // TODO: Generate Equals() and GetHashCode() methods.
 
         public override bool Equals(object obj)
@@ -77,7 +76,7 @@ namespace TechJobsOO
                 JobCoreCompetency.Value = "Data not available";
             }
 
-            string output = $"ID: {Id} \n Name: {Name} \n Employer: {EmployerName.Value} \n Location: {EmployerLocation.Value} \n Position Type: {JobType.Value} \n Core Compentency: {JobCoreCompetency.Value} \n";
+            string output = $"\n ID: {Id} \n Name: {Name} \n Employer: {EmployerName.Value} \n Location: {EmployerLocation.Value} \n Position Type: {JobType.Value} \n Core Compentency: {JobCoreCompetency.Value} \n";
 
             return output;
         }
