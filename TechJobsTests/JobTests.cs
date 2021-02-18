@@ -1,103 +1,77 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using TechJobsOO;
-namespace TechJobTests
+
+namespace TechJobsTests
 {
     [TestClass]
     public class JobTests
     {
-        static Employer acme = new Employer("ACME");
-        static Location desert = new Location("Desert");
-        static CoreCompetency persistence = new CoreCompetency("Persistance");
-        static PositionType quality = new PositionType("Quality Control");
-
-        Job test1 = new Job("Product Tester", acme, desert, quality, persistence);
-        Job test2 = new Job("Product Tester", acme, desert, quality, persistence);
-        Job test3 = new Job();
-        Job test4 = new Job(null, acme, desert, quality, persistence);
-
         [TestMethod]
         public void TestSettingJobId()
         {
+            Job test_job = new Job();
+            Job test_job2 = new Job();
 
-            Job testObject1 = new Job();
-            Job testObject2 = new Job();
-
-            Assert.IsTrue(testObject1.Id != testObject2.Id && (testObject1.Id + 1) == testObject2.Id);
-
-            Assert.IsTrue((test1.Id < test2.Id) && ((test1.Id + 1) == test2.Id));
-
+            Assert.AreNotEqual(test_job2.Id, test_job.Id);
         }
 
         [TestMethod]
         public void TestJobConstructorSetsAllFields()
         {
-            Job testObject = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality"), new CoreCompetency("Persistence"));
+            Job test_job = new Job("Product Tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
 
-            {
-                Assert.IsTrue(testObject.Name == "Product tester");
-                Assert.IsTrue(testObject.EmployerName.Value == "ACME");
-                Assert.IsTrue(testObject.EmployerLocation.Value == "Desert");
-                Assert.IsTrue(testObject.JobType.Value == "Quality");
-                Assert.IsTrue(testObject.JobCoreCompetency.Value == "Persistence");
-
-                Assert.IsTrue(test1.Name == "Product Tester");
-                Assert.AreEqual("Quality Control", test1.JobType.ToString());
-                Assert.AreEqual(persistence.ToString(), test1.JobCoreCompetency.ToString());
-                Assert.AreEqual(test1.EmployerLocation, desert);
-                Assert.IsTrue(test1.EmployerName.Value == "ACME");
-            }
-
+            Assert.AreEqual(test_job.Name, "Product Tester");
+            Assert.AreEqual(test_job.EmployerName.Value, "ACME");
+            Assert.AreEqual(test_job.EmployerLocation.Value, "Desert");
+            Assert.AreEqual(test_job.JobType.Value, "Quality control");
+            Assert.AreEqual(test_job.JobCoreCompetency.Value, "Persistence");
         }
+
         [TestMethod]
         public void TestJobsForEquality()
         {
+            Job test_job = new Job("Product Tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+            Job test_job2 = new Job("Product Tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
 
-            Job testObject1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"))
-            {
-            };
-            Job testObject2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"))
-            {
-            };
-            Assert.IsFalse(testObject1.Equals(testObject2));
+            Assert.AreNotEqual(test_job.Id, test_job2.Id);
+        }
 
-            Assert.IsFalse(test1.Id == test2.Id);
+
+
+        [TestMethod]
+        public void FirstStringTest()
+        {
+            Job test_job = new Job("Product Tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+
+            string newOutput = test_job.ToString();
+
+            Assert.AreEqual(true, newOutput.EndsWith("\n"));
+
+            Assert.AreEqual("\n", newOutput.Substring(0, 1));
         }
 
         [TestMethod]
-        public void TestForToString()
+        public void SecondStringTest()
         {
-            Job testObject = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-            {
-                string expectedOutput = $"ID: {testObject.Id} \n Name: {testObject.Name} \n Employer: {testObject.EmployerName} \n Location: {testObject.EmployerLocation} \n Position Type: {testObject.JobType} \n Core Compentency: {testObject.JobCoreCompetency}";
-                Assert.AreEqual(expectedOutput, testObject.ToString());
+            Job test_job = new Job("Product Tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
 
-                StringAssert.StartsWith(test1.ToString(), "\n");
-                StringAssert.EndsWith(test1.ToString(), "\n");
-            }
+            string newOutput = test_job.ToString();
+
+            Assert.AreEqual(true, newOutput.Contains("Product Tester"));
+            Assert.AreEqual(true, newOutput.Contains("ACME"));
+            Assert.AreEqual(true, newOutput.Contains("Desert"));
+            Assert.AreEqual(true, newOutput.Contains("Quality control"));
+            Assert.AreEqual(true, newOutput.Contains("Persistence"));
         }
 
         [TestMethod]
-        public void TestForOutput()
+        public void ThirdStringTest()
         {
-            Job testObject = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-            {
-                string expectedOutput = $"ID: {testObject.Id} \n Name: {testObject.Name} \n Employer: Data Not Available \n Location: {testObject.EmployerLocation} \n Position Type: {testObject.JobType} \n Core Compentency: {testObject.JobCoreCompetency}";
-                Assert.AreEqual(expectedOutput, "Data Not Available");
-            }
-        }
-        public void TestJobsToStringAlt()
-        {
-            StringAssert.StartsWith(test1.ToString(), "\n");
-            StringAssert.Contains(test1.ToString(), "ID:   " + test1.Id);
-            StringAssert.Contains(test1.ToString(), "Name:   Product Tester");
-            StringAssert.Contains(test1.ToString(), "Employer:   ACME");
-            StringAssert.Contains(test1.ToString(), "Location:   Desert");
-            StringAssert.Contains(test1.ToString(), "Position Type:   Quality Control");
-            StringAssert.Contains(test1.ToString(), "Core Competency:   Persistance");
-            StringAssert.EndsWith(test1.ToString(), "\n");
-            StringAssert.Contains(test3.ToString(), "OOPS! This job does not seem to exist.");
-            StringAssert.Contains(test4.ToString(), "Data not available");
+            Job test_job = new Job("Product Tester", new Employer(""), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+
+            string newOutput = test_job.ToString();
+
+            Assert.AreEqual(true, newOutput.Contains("Employer: Data not available"));
         }
     }
 }
